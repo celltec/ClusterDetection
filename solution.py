@@ -170,7 +170,7 @@ def run(matrix_size=13, show_all_clusters=False, no_overlap=True, cluster_min_si
         clusters = execute_timed(filter_overlap, clusters, message="Filtering overlapping clusters")
     print_result(matrix, clusters, show_all_clusters)
 
-def performance_test(cases=15, runs=3, start_size=10, increment=10, show_all_clusters=False, no_overlap=True, cluster_min_size=3, x_frequency=5):
+def performance_test(cases=15, runs=3, start_size=10, increment=10):
     """Executes a set of test cases, calculates the average runtimes and prints out the timings."""
     print("\n  Running performance test...\n")
     results = {}
@@ -178,7 +178,7 @@ def performance_test(cases=15, runs=3, start_size=10, increment=10, show_all_clu
         size = start_size + case * increment
         results[size] = []
         for _ in range(runs):
-            results[size].append(execute_timed(run, size, show_all_clusters, no_overlap, cluster_min_size, x_frequency))
+            results[size].append(execute_timed(run, size))
             print("\n " + "="*(size*2+1 if size > 34 else 69) + "\n")
     clear_console()
     print(green("\n  Performance test results:\n"))
@@ -213,7 +213,7 @@ if __name__ == "__main__":
         elif choice is "3":
             print("\n   1 -> " + run.__doc__ + "\n"
                   + "   2 -> " + performance_test.__doc__ + "\n"
-                  + "   3 -> Prints help.\n"
+                  + "   3 -> Prints a description of the options.\n"
                   + "   4 -> Ends the program.")
         elif choice is "4":
             break # end program
