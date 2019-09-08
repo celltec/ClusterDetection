@@ -1,7 +1,7 @@
 
 # ClusterDetection
 
-## Find the largest square cluster in a matrix.
+### Find the largest square cluster in a matrix.
 
 ![example matrix](https://user-images.githubusercontent.com/20523988/64360441-ce3f0e00-d00a-11e9-936b-ee8453e61881.png)
 
@@ -55,6 +55,14 @@ Starting the program you will be greeted with a small menu.
 * Runs per case
 * Size of the matrix at the start
 * Size increment for every new case
+
+#### Parameters can be set via the function calls in main
+```python
+if choice is "1":
+    run(matrix_size=15, show_all_clusters=False, no_overlap=True)
+elif choice is "2":
+    performance_test(cases=15, runs=3, start_size=10, increment=10)
+```
 
 ## Examples
 
