@@ -20,7 +20,7 @@ def cross(number):
     return str(number) + "x" + str(number)
 
 def seconds(time):
-    """Macro to add a unit to the time."""
+    """Macro to format the time."""
     return "[{:.0f}ms]".format(time*1000) if time < 1 else "[{:.2f}s]".format(time)
 
 def execute_timed(function, *args, message=None):
@@ -191,19 +191,28 @@ def performance_test(cases=15, runs=3, start_size=10, increment=10):
         print(("  {:>" + format_distance + "} -> ").format(cross(case)) + seconds(average)[1:-1])
     print("")
 
+def print_menu():
+    print("\n  \u2554" + "\u2550"*22 + "\u2557\n"
+          + "  \u2551         MENU         \u2551\n"
+          + "  \u255F" + "\u2500"*22 + "\u2562\n"
+          + "  \u2551 [1] Run once         \u2551\n"
+          + "  \u2551 [2] Performance test \u2551\n"
+          + "  \u2551 [3] Help             \u2551\n"
+          + "  \u2551 [4] Quit             \u2551\n"
+          + "  \u2551                      \u2551\n"
+          + "  \u2551 Choice:              \u2551\n"
+          + "  \u255A" + "\u2550"*22 + "\u255D", end=" ", flush=True)
+    
+def print_help():
+    print("\n   1 -> " + run.__doc__ + "\n"
+          + "   2 -> " + performance_test.__doc__ + "\n"
+          + "   3 -> Prints a description of the options.\n"
+          + "   4 -> Ends the program.")
+
 if __name__ == "__main__":
     clear_console() # clearing once can fix ANSI escape codes on windows
     while True:
-        print("\n  \u2554" + "\u2550"*22 + "\u2557\n"
-              + "  \u2551         MENU         \u2551\n"
-              + "  \u255F" + "\u2500"*22 + "\u2562\n"
-              + "  \u2551 [1] Run once         \u2551\n"
-              + "  \u2551 [2] Performance test \u2551\n"
-              + "  \u2551 [3] Help             \u2551\n"
-              + "  \u2551 [4] Quit             \u2551\n"
-              + "  \u2551                      \u2551\n"
-              + "  \u2551 Choice:              \u2551\n"
-              + "  \u255A" + "\u2550"*22 + "\u255D", end=" ", flush=True)
+        print_menu()
         choice = input("\u001b[1A\u001b[15D") # move cursor
         clear_console()
         if choice is "1":
@@ -211,9 +220,6 @@ if __name__ == "__main__":
         elif choice is "2":
             performance_test() # change parameters here
         elif choice is "3":
-            print("\n   1 -> " + run.__doc__ + "\n"
-                  + "   2 -> " + performance_test.__doc__ + "\n"
-                  + "   3 -> Prints a description of the options.\n"
-                  + "   4 -> Ends the program.")
+            print_help()
         elif choice is "4":
             break # end program
