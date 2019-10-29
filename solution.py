@@ -42,10 +42,10 @@ def execute_timed(function, *args, message=None):
 
 class Cluster:
     def __init__(self, position, size=1):
-        self.x = position['x']  # x coordinate of top left corner
-        self.y = position['y']  # y coordinate of top left corner
-        self.size = size        # lenth of one side
-        self.area = set()       # a collection of all coordinates
+        self.x = position['x']  # top left corner
+        self.y = position['y']
+        self.size = size
+        self.area = set()  # a collection of all coordinates
         for y in range(self.y, self.y + self.size):
             for x in range(self.x, self.x + self.size):
                 self.area.add((x, y))
@@ -73,9 +73,9 @@ def check_cluster_size(matrix, position, size):
     if size > 0:
         for y in range(position['y'] + 1, position['y'] + size):
             for x in range(position['x'], position['x'] + size):
-                if matrix[y][x] is "O":
+                if matrix[y][x] == "O":
                     new_size = x - position['x']
-                    if new_size is 0:
+                    if new_size == 0:
                         new_size = y - position['y']
                         return new_size
                     return check_cluster_size(matrix, position, new_size)
@@ -97,13 +97,13 @@ def get_clusters(matrix, min_required_size):
         assumed_size = 0
         edge_reached = False
         while x < matrix_size:
-            if matrix[y][x] is "X":
+            if matrix[y][x] == "X":
                 if not position:
                     position = {'x': x, 'y': y}
                 assumed_size += 1
                 if assumed_size is matrix_size - position['x'] or assumed_size is matrix_size - position['y']:
                     edge_reached = True
-            if (matrix[y][x] is "O" and assumed_size) or edge_reached:
+            if (matrix[y][x] == "O" and assumed_size) or edge_reached:
                 if assumed_size >= min_required_size:
                     actual_size = check_cluster_size(matrix, position, assumed_size)
                     if actual_size >= min_required_size:
@@ -118,13 +118,7 @@ def get_clusters(matrix, min_required_size):
 
 def make_matrix(size, x_frequency=1):
     """Returns a 2D list containing randomly distributed 'X' and 'O'."""
-    matrix = []
-    for row in range(size):
-        matrix.append([])
-        for _ in range(size):
-            value = random.choices("XO", [x_frequency, 1]).pop()
-            matrix[row].append(value)
-    return matrix
+    return [[random.choices("XO", [x_frequency, 1]).pop() for _ in range(size)] for _ in range(size)]
 
 def print_matrix(matrix, clusters=None):
     """Prints out a matrix with the option to color certain areas red."""
@@ -204,22 +198,22 @@ def print_menu():
           + "  \u255A" + "\u2550"*22 + "\u255D", end=" ", flush=True)
     
 def print_help():
-    print("\n   1 -> " + run.__doc__ + "\n"
-          + "   2 -> " + performance_test.__doc__ + "\n"
+    print("\n   1 -> " + str(run.__doc__) + "\n"
+          + "   2 -> " + str(performance_test.__doc__) + "\n"
           + "   3 -> Prints a description of the options.\n"
           + "   4 -> Ends the program.")
 
 if __name__ == "__main__":
-    clear_console() # clearing once can fix ANSI escape codes on windows
+    clear_console()  # clearing once can fix ANSI escape codes on windows
     while True:
         print_menu()
-        choice = input("\u001b[1A\u001b[15D") # move cursor
+        choice = input("\u001b[1A\u001b[15D")  # move cursor
         clear_console()
-        if choice is "1":
-            run() # change parameters here
-        elif choice is "2":
-            performance_test() # change parameters here
-        elif choice is "3":
+        if choice == "1":
+            run()  # add parameters here
+        elif choice == "2":
+            performance_test()  # add parameters here
+        elif choice == "3":
             print_help()
-        elif choice is "4":
-            break # end program
+        elif choice == "4":
+            break  # end program
