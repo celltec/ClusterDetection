@@ -1,14 +1,27 @@
 use rand::thread_rng;
 use rand::seq::SliceRandom;
-use std::time::Instant;
+use clap::{App, Arg};
+
+mod lib;
 
 const SIZE: usize = 10;
 
 fn main() {
-    let start = Instant::now();
-    println!("{:?}", make_matrix());
-    let duration = start.elapsed();
-    println!("TIME: {:?}", duration);
+    let args = App::new("ClusterDetection")
+                    .about("Find the largest square cluster in a matrix")
+                    .arg(Arg::new("bench"))
+                    .get_matches();
+
+    if args.is_present("bench") {
+        bench!(make_matrix);
+        std::process::exit(0);
+    }
+
+    run();
+}
+
+fn run() {
+    make_matrix();
 }
 
 fn make_matrix() -> [char; SIZE*SIZE] {
