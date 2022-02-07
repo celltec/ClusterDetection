@@ -21,10 +21,16 @@ fn main() {
 }
 
 fn run() {
-    make_matrix();
+    let matrix = make_matrix();
+    get_clusters(matrix);
+
 }
 
 fn make_matrix() -> [char; SIZE*SIZE] {
     let mut rng = thread_rng();
     [' '; SIZE*SIZE].map(|_| *['X', 'O'].choose(&mut rng).unwrap())
+}
+
+fn get_clusters(matrix: [char; SIZE*SIZE]) {
+    println!("{:?}", matrix);
 }
